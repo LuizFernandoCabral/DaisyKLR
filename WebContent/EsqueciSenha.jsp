@@ -49,12 +49,6 @@
                     <li>
                         <a href="#">Sobre</a>
                     </li>
-                    <li>
-                        <a href="#">Historico</a>
-                    </li>
-                    <li>
-                        <a href="#">Dados Pessoais</a>
-                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -75,35 +69,14 @@
             </div>
         </div>
         
-        <!-- NUSP -->
-        <div class="row" style="margin-left:5%">
-            <div class="col-lg-12">
-                <h3>NUSP:
-                    <small>01234567</small>
-                </h3>
-            </div>
-        </div>
-        
-        <!-- Areas Conhecimento -->
-        <div class="row" style="margin-left:5%">
-            <div class="col-lg-12">
-                <h3>Áreas de Conhecimento:
-                	<ol></ol>
-                    	<li><small>0</small></li>
-                    	<li><small>1</small></li>
-                    	<li><small>2</small></li>
-                    </ol>
-                </h3>
-            </div>
-        </div>
-        
         <!-- Alteração Senha -->
-        <div class="row" style="margin-left:5%;border-style:solid">
+        <div class="row" style="margin-left:5%">
 
-            <form method="post" action="EsqueciSenha">
+            <form class="form-inline" method="post" action="EsqueciSenha">
 					<div class="col-lg-12">
 					<label for="password">E-mail:</label>
 					<input type="password" name="password" id="password" autofocus required>
+					<input type="submit" value="Enviar" />
 					</div>
 			</form>	
             
