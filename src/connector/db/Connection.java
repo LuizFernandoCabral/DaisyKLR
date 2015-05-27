@@ -43,8 +43,7 @@ class Connection {
 			e.printStackTrace();
 			throw e; 
 		} catch (SQLException e) { 
-			//Não conseguindo se conectar ao banco 
-			System.out.println("Nao foi possivel conectar ao Banco de Dados.");
+			//Could't connect
 			e.printStackTrace();
 			throw e;
 		}
@@ -57,7 +56,7 @@ class Connection {
 			connection.close();
 		}
 		catch (SQLException e) {
-			System.out.println("Não foi possivel fechar a conexão.");
+			//Couldn't close connection
 			e.printStackTrace();
 			throw e;
 		}
