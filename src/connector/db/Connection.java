@@ -21,7 +21,7 @@ class Connection {
 	
 	private java.sql.Connection connection;
 	private static final String SERVER_NAME = "localhost";
-	private static final String DATABASE_NAME = "daisyklr";
+	private static final String DATABASE_NAME = "DaisyKLR";
 	private static final String USERNAME = "root";
 	private static final String PASSWORD = "";
 	protected Connection() throws Exception {
