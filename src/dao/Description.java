@@ -6,29 +6,21 @@ import connector.db.DB;
 import connector.db.SelectReader;
 
 public class Description {
-	/**** Attributes ****/
-	// Description id
+	/**Description id**/
 	private int id;
-	
-	// Description text
+	/**Description text**/
 	private String text;
-	
-	// Author of description nusp
+	/**Author of description nusp**/
 	private int user_nusp;
-	
-	// Image id
+	/**Image id**/
 	private int image_id; 
-	
-	// Description approved
+	/**Description approved**/
 	private boolean approved = false;
-	
-	// Number of approvals of this description
+	/**Number of approvals of this description**/
 	private int upVotes;
-	
-	// Number of disapprovals of this description
+	/**Number of disapprovals of this description**/
 	private int downVotes;
-	
-	// totalVotes = upVotes + downVotes
+	//totalVotes = upVotes + downVotes
 	
 	/**** Getters & setters ****/
 	
