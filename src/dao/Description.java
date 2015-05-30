@@ -38,91 +38,52 @@ public class Description {
 	// com id, text, approved, discarded, user_nusp, image_id
 	
 	// Update all attributes in DB
+	public void Save() {
+		DB.InsertUpdate("Descriptions", false, 
+				args);
+	}
 	
-	// Approve description
-	private void approve(int id){
+	/**
+	 * Approve description
+	 */
+	private void approve(){
 		approved = true;
 	}
 	
-	// Discard description
-	private void discard() {
-		
+	/**
+	 * Discard description
+	 */
+	private void remove() throws Exception {
+		DB.ExecuteQuery("delete from Descriptions where id=" + id);
 	}
 	
-	// Vote up: increment approved and verify
+	/**
+	 * Increment approval score and verify if description approved
+	 * @param id
+	 */
 	public void upVote(int id) {
 		upVotes++;
-		verify();
+		checkVotes();
 	}
 	
-	// Vote down: increment disapproved and verify
+	/**
+	 * Increment disapproval score and verify if description disaproved
+	 * @param id
+	 */
 	public void downVote(int id) {
 		downVotes++;
-		verify();
+		checkVotes();
 	}
 	
-	private void verify() {
-		//verify if approved / disapproved before total = 3
+	/**
+	 * Verify if description has been definitively approved / disapproved
+	 */
+	private void checkVotes() {
 		if (upVotes == 2) {
 			approve();
 		} else if (downVotes == 2) {
-			discard();
+			remove();
 		}
 	}
-	
-	//discarded
-	
-	
-	
-	
-	
-	
-	public Description(String username, String userpass) {
-		DB.Select("SELECT * from Users where name='"+ username + "' and password='" + userpass + "'", new SelectReader() {
-			public void Read(ResultSet rs) throws Exception
-			{
-				if (rs.next()) {
-					nusp = rs.getLong("nusp");
-					name = rs.getString("name");
-					password = rs.getString("password");
-					type = rs.getInt("usertype");
-				}
-				else
-					throw new Exception("Usuário inexistente");
-			}
-		});
-	}
-	
-	
-	public User(long user_nusp) {
-		DB.Select("SELECT * from Users where nusp=" + user_nusp, new SelectReader() {
-			public void Read(ResultSet rs) throws Exception
-			{
-				if (rs.next()) {
-					nusp = rs.getLong("nusp");
-					name = rs.getString("name");
-					password = rs.getString("password");
-					type = rs.getInt("usertype");
-				}
-				else
-					throw new Exception("Usuário inexistente");
-			}
-		});
-	}
-	
-	public User(long nusp, String name, String password, int type) {
-		this.nusp = nusp;
-		this.name = name;
-		this.password = password;
-		this.type = type;
-	}
-	
-	public void Save() throws Exception {
-	}
-	
-	private long nusp = 0;
-	private String name;
-	private String password;
-	private int type;
 
 }
