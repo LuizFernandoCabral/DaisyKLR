@@ -10,16 +10,9 @@ public class Description {
 	/**Description id**/
 	private long id;
 	private String text;
-	/**Description approved, ie upVotes >= 2**/
-	private boolean approved = false;
 	/**Author of description nusp**/
 	private long user_nusp;
-	private long image_id; 
-	/**Number of approvals of this description**/
-	private int upVotes = 0;
-	/**Number of disapprovals of this description**/
-	private int downVotes = 0;
-	//totalVotes = upVotes + downVotes
+	private long image_id;
 	private Boolean new_description = false;
 	
 	private static long IDCOUNT = 0;
@@ -52,7 +45,7 @@ public class Description {
 					downVotes = rs.getInt("downVotes");
 				}
 				else
-					throw new Exception("Usuário inexistente");
+					throw new Exception("Descriçao inexistente");
 			}
 		});
 	}
@@ -70,57 +63,22 @@ public class Description {
 	/**
 	 * Save description in DB
 	 */
-	public void Save() {
+	public void Save() throws Exception{
 		DB.InsertUpdate("Descriptions", 
 				new_description, 
 				new Field<Long>("id",this.id,true),
 				new Field<String>("text",this.text),
-				new Field<Boolean>("approved",this.approved),
-				//new Field<Boolean>("discarded",this.discarded),
+				new Field<Boolean>("approved",new_description ? false : Rating.isApproved(this.id).equals("approved")),
 				new Field<Long>("user_nusp",this.user_nusp),
-				new Field<Long>("image_id",this.image_id),
-				new Field<Integer>("upVotes",this.upVotes),
-				new Field<Integer>("downVotes",this.downVotes)
+				new Field<Long>("image_id",this.image_id)
 				);
 	}
 	
 	/**
-	 * Approve description
-	 */
-	private void approve(){
-		this.approved = true;
-		Save(); 
-	}
-	/**
 	 * Discard description
 	 */
-	private void remove() throws Exception {
+	public void remove() throws Exception {
 		DB.ExecuteQuery("delete from Descriptions where id=" + id);
 	}
-	/**
-	 * Increment approval score and verify if description approved
-	 */
-	public void upVote() {
-		this.upVotes++;
-		checkVotes();
-	}
-	/**
-	 * Increment disapproval score and verify if description disapproved
-	 */
-	public void downVote() {
-		this.downVotes++;
-		checkVotes();
-	}
-	/**
-	 * Verify if description has been definitively approved / disapproved
-	 */
-	private void checkVotes() {
-		if (this.upVotes == 2) {
-			approve();
-			// Should we create a method to update only a given attribute in the DB?
-			Save();
-		} else if (this.downVotes == 2) {
-			remove();
-		}
-	}
+	
 }
