@@ -7,7 +7,6 @@ import connector.db.Field;
 import connector.db.SelectReader;
 
 public class User {
-
 	/**
 	 * Loads existent user with given nusp
 	 * @param user_nusp

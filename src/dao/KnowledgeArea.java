@@ -78,6 +78,28 @@ public class KnowledgeArea {
 		return list;
 	}
 	
+<<<<<<< HEAD
+=======
+	public static void main(String[] args) throws Exception {
+		List<KnowledgeArea> areas = KnowledgeArea.search("Teste");
+		//List<Book> lista = new ArrayList<Book>();
+		for (KnowledgeArea area : areas){
+			System.out.println(area.name);
+			System.out.println(area.id);
+			//lista = area.getlist_book();
+			//for (Book book : lista){}
+		}
+	}
+	
+	/**
+	 * Constructor to create new entry
+	 * @param KnowledgeArea_name
+	 */
+	public KnowledgeArea (String KnowledgeArea_name) {
+		this.name = KnowledgeArea_name;
+	}
+	
+>>>>>>> origin/ricardo
 	/**
 	 * Private Constructor to work with search method
 	 * @param KnowledgeArea_id

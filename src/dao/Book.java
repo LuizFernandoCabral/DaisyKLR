@@ -10,6 +10,7 @@ import connector.db.SelectReader;
 
 public class Book {
 	
+<<<<<<< HEAD
 	public static void main(String[] args) throws Exception {
 		Book B = new Book(321, "Teste3", "Luiz");
 		KnowledgeArea areas = new KnowledgeArea (1);
@@ -29,6 +30,8 @@ public class Book {
 	 * @param B_isbn
 	 * @throws Exception
 	 */
+=======
+>>>>>>> origin/ricardo
 	public Book(long B_isbn) throws Exception {
 		DB.Select("SELECT * from Books where isbn='"+ B_isbn + "'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
@@ -45,6 +48,7 @@ public class Book {
 		});
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Constructor to create new entry if non-existing
 	 * @param KnowledgeArea_name
@@ -72,6 +76,8 @@ public class Book {
 	 * @return
 	 * @throws Exception
 	 */
+=======
+>>>>>>> origin/ricardo
 	public static List<Book> searchByTitle(String title) throws Exception {
 		List<Book> list = new ArrayList<Book>();
 		DB.Select("SELECT * from Books where title like '%"+ title + "%'", new SelectReader() {
@@ -87,12 +93,17 @@ public class Book {
 		return list;	
 	}
 	
+<<<<<<< HEAD
 	/**
 	 * Method that searches the DB for all books by "author"
 	 * @param author
 	 * @return
 	 * @throws Exception
    */
+=======
+	
+	
+>>>>>>> origin/ricardo
 	public static List<Book> searchByAuthor(String author) throws Exception {
 		List<Book> list = new ArrayList<Book>();
 		DB.Select("SELECT * from Books where authors like '%"+ author + "%'", new SelectReader() {
