@@ -9,7 +9,7 @@ import connector.db.SelectReader;
 
 public class Book {
 	
-	public Book(long B_isbn) {
+	public Book(long B_isbn) throws Exception {
 		DB.Select("SELECT * from Books where isbn='"+ B_isbn + "'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
@@ -25,7 +25,7 @@ public class Book {
 		});
 	}
 	
-	public static List<Book> searchByTitle(String title) {
+	public static List<Book> searchByTitle(String title) throws Exception {
 		List<Book> list = new ArrayList<Book>();
 		DB.Select("SELECT * from Books where title like '%"+ title + "%'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
@@ -42,7 +42,7 @@ public class Book {
 	
 	
 	
-	public static List<Book> searchByAuthor(String author) {
+	public static List<Book> searchByAuthor(String author) throws Exception {
 		List<Book> list = new ArrayList<Book>();
 		DB.Select("SELECT * from Books where author like '%"+ author + "%'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception

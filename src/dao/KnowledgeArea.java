@@ -13,7 +13,7 @@ public class KnowledgeArea {
 	 * Constructor that search in Database for the Knowledge Area - through the id
 	 * @param knowledgeArea_id
 	 */
-	public KnowledgeArea(long knowledgeArea_id) {
+	public KnowledgeArea(long knowledgeArea_id) throws Exception {
 		DB.Select("SELECT * from KnowledgeAreas where id='"+ knowledgeArea_id + "'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
@@ -40,7 +40,7 @@ public class KnowledgeArea {
      * @param Area - name
      * @return list<KnowledgeArea> with Area's name
      */
-	public static List<KnowledgeArea> search(String Area){
+	public static List<KnowledgeArea> search(String Area) throws Exception {
 		List<KnowledgeArea> list = new ArrayList<KnowledgeArea>();
 		DB.Select("SELECT * from KnowledgeAreas where name like '%"+ Area + "%'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
@@ -55,7 +55,7 @@ public class KnowledgeArea {
 		return list;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		List<KnowledgeArea> areas = KnowledgeArea.search("Teste");
 		//List<Book> lista = new ArrayList<Book>();
 		for (KnowledgeArea area : areas){
