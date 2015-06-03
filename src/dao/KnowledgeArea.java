@@ -77,7 +77,7 @@ public class KnowledgeArea {
 		
 		return list;
 	}
-	
+
 	/**
 	 * Private Constructor to work with search method
 	 * @param KnowledgeArea_id

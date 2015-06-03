@@ -1,19 +1,9 @@
 package dao;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.ResultSet;
-
-import javax.servlet.http.Part;
-
-import org.apache.tomcat.util.http.fileupload.FileUtils;
 
 import connector.db.DB;
 import connector.db.Field;
@@ -74,14 +64,16 @@ public class Image {
 	 * @throws IOException 
 	 */
 	public void Save() throws IOException {
+		//Insert/update image in db
 		this.id = DB.InsertUpdate("Images", 
-				true,
+				tempFile != null,
 				new Field<Long>("id", id, true),
 				new Field<String>("location", ""),
 				new Field<Integer>("page", page),
 				new Field<Long>("book_isbn", book_isbn)
 				);
 		if (tempFile != null) {
+			//calculate filename
 			this.location = "img" + id + "." + tempFile.getName().split("[.]")[tempFile.getName().split("[.]").length-1];
 			DB.InsertUpdate("Images", 
 					false,
@@ -90,7 +82,6 @@ public class Image {
 					);
 			File dest = new File(IMAGES_FOLDER + location);
 			File folder = new File(IMAGES_FOLDER);
-			System.out.println(folder.exists());
 			if (!folder.exists())
 				folder.mkdirs();
 			Files.copy(tempFile.toPath(), dest.toPath());
@@ -99,14 +90,9 @@ public class Image {
 	}
 	private static final String IMAGES_FOLDER = "/daisyklr/images/";
 	
-	public static void main(String[] args) throws IOException {
-		Image im = new Image(new File("/Users/ricardo/Downloads/revolucao_bichos1.jpg"), 10, 1);
-		im.Save();
-		System.out.println("Salvou");
-	}
 	private File tempFile = null;
 	private long id = 0;
 	private int page;
-	private String location;
+	private String location = "";
 	private long book_isbn;
 }
