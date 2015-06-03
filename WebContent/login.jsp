@@ -73,8 +73,8 @@
 
             <form method="post" action="Login">
 			<p>
-				<div class="col-lg-12" style="margin-left:0.8%">
-				<label for="numUSP">Nusp:</label>
+				<div class="col-lg-12">
+				<label for="numUSP">&nbsp;&nbsp;Nusp:</label>
 				<input type="text" name="nusp" id="nusp" autofocus required>
 				</div>
 				<div class="col-lg-12">
