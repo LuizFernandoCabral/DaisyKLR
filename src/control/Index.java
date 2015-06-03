@@ -18,19 +18,7 @@ public class Index extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserType type = (UserType) session.getAttribute("usertype");
-		switch (type) {
-		case Avaliador:
-			response.sendRedirect("index_avaliador.jsp");
-			break;
-		case Descritor:
-			response.sendRedirect("index_descritor.jsp");
-			break;
-		case DescritorAvaliador:
-			response.sendRedirect("index_descritor_avaliador.jsp");
-			break;
-		}
+		response.sendRedirect("books.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,7 @@
 package control;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,10 +35,10 @@ public class Login extends HttpServlet {
 			session.setAttribute("nusp", nusp);
 			session.setAttribute("usertype", us.getType());
 			//Direciona para index
-			((HttpServletRequest) request).getRequestDispatcher("/Index").forward(request, response);
+			((HttpServletRequest) request).getRequestDispatcher("index.jsp").forward(request, response);
 		}
 		catch (Exception e) {
-			response.sendRedirect("login.jsp?msg=" + e.getMessage());
+			response.sendRedirect("login.jsp?msg=" + URLEncoder.encode(e.getMessage(), "UTF-8"));
 		}
 		
 		

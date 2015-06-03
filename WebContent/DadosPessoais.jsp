@@ -55,6 +55,9 @@
                     <li>
                         <a href="#">Dados Pessoais</a>
                     </li>
+                     <li>
+                        <a href="Logout">Logout</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
