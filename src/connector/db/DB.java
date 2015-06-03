@@ -51,16 +51,20 @@ public class DB {
 	 * @param table_name name of the table
 	 * @param insert true if it's insert or false if it's update (register already exists)
 	 * @param args all the columns to be set
+	 * @return o pk inserido/atualizado
 	 */
-	public static void InsertUpdate(String table_name, boolean insert, Field<?> ... args) {
+	public static long InsertUpdate(String table_name, boolean insert, Field<?> ... args) {
+		long id = -1;
 		String sqlQuery = "";
 		if (!insert) {
 			sqlQuery = "Update " + table_name + " set ";
 			String where = "";
 			for (Field<?> f : args) {
 				sqlQuery += f.getName() + " = ?,";
-				if (f.IsPrimaryKey())
+				if (f.IsPrimaryKey()) {
 					where = " WHERE " + f.getName() + " = " + f.getValue();
+					id = (long) f.getValue();
+				}
 			}
 			sqlQuery = sqlQuery.substring(0, sqlQuery.length() - 1) + where;
 		}
@@ -86,6 +90,14 @@ public class DB {
 				update_insert.setObject(i+1, args[i].getValue());
 			}
 			update_insert.executeUpdate();
+			if (insert) {
+				//Pega o id
+				Statement st = con.Get().createStatement();
+				ResultSet rs = st.executeQuery("select last_insert_id() as last_id");
+				rs.next();
+				id = rs.getLong("last_id");
+				st.close();
+			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -101,7 +113,10 @@ public class DB {
 				e.printStackTrace();
 			}
 		}
+		
+		return id;
 	}
+	
 	/**
 	 * Executes a query. Use it to remove data (delete)
 	 * @param query
