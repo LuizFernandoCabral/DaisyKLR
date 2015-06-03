@@ -58,6 +58,10 @@
                     <li>
                         <a href="Logout">Logout</a>
                     </li>
+                    <li>
+                    	
+            			
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -73,11 +77,18 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Livros
                     <small>Escolha um livro</small>
+                    <span class="pull-right">
+                    <h3>
+                    	<% dao.User us = new dao.User((long) request.getSession().getAttribute("nusp"));
+            				out.print(us.getName());
+            				%>
+            				</h3>
+            				</span>
                 </h1>
             </div>
         </div>
         <!-- /.row -->
-
+		<% for (int i = 0; i < 3; i++) { %>
         <!-- Projects Row -->
         <div class="row">
             <div class="col-md-4 portfolio-item">
@@ -85,7 +96,7 @@
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
-                    <a href="#">Livro 1</a>
+                    <a href="#">Livro <%=(3*i + 1) %></a>
                 </h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
             </div>
@@ -94,7 +105,7 @@
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
-                    <a href="#">Project Name</a>
+                    <a href="#">Livro <%=(3*i + 2) %></a>
                 </h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
             </div>
@@ -103,75 +114,14 @@
                     <img class="img-responsive" src="http://placehold.it/700x400" alt="">
                 </a>
                 <h3>
-                    <a href="#">Project Name</a>
+                    <a href="#">Livro <%=(3*i + 3) %></a>
                 </h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
             </div>
         </div>
+        <% } %>
         <!-- /.row -->
 
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-        <!-- /.row -->
 
         <hr>
 
@@ -189,7 +139,7 @@
                         <a href="#">2</a>
                     </li>
                     <li>
-                        <a href="#">3</a>
+                        <a href="?page=3">3</a>
                     </li>
                     <li>
                         <a href="#">4</a>

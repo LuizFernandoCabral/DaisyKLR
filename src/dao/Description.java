@@ -13,9 +13,9 @@ public class Description {
 	/**Author of description nusp**/
 	private long user_nusp;
 	private long image_id;
-	private Boolean new_description = false;
-	
-	private static long IDCOUNT = 0;
+	private boolean approved;
+	private boolean discarded;
+	private boolean new_description = false;
 	
 	public long getId() {
 		return id;
@@ -28,6 +28,22 @@ public class Description {
 		this.text = text;
 	}
 	
+	public boolean isApproved() {
+		return approved;
+	}
+	
+	public boolean isDiscarded() {
+		return discarded;
+	}
+	
+	public void setApproved() {
+		approved = true;
+	}
+	
+	public void setDiscarded() {
+		approved = true;
+	}
+	
 	/**
 	 * Loads existent description with given id
 	 */
@@ -38,23 +54,21 @@ public class Description {
 				if (rs.next()) {
 					text = rs.getString("text");
 					approved = rs.getBoolean("approved");
-					//discarded = rs.getBoolean("discarded");
+					discarded = rs.getBoolean("discarded");
 					user_nusp = rs.getLong("user_nusp");
 					image_id = rs.getLong("image_id");
-					upVotes = rs.getInt("upVotes");
-					downVotes = rs.getInt("downVotes");
 				}
 				else
-					throw new Exception("Descriçao inexistente");
+					throw new Exception("Descrição inexistente");
 			}
 		});
 	}
+	
 	/**
 	 * Create new Description
 	 */
 	public Description(String text,long user_nusp,long image_id) {
-		this.id = IDCOUNT;
-		IDCOUNT++;
+		this.id = 0;
 		this.text = text;
 		this.user_nusp = user_nusp;
 		this.image_id = image_id;
@@ -68,17 +82,8 @@ public class Description {
 				new_description, 
 				new Field<Long>("id",this.id,true),
 				new Field<String>("text",this.text),
-				new Field<Boolean>("approved",new_description ? false : Rating.isApproved(this.id).equals("approved")),
 				new Field<Long>("user_nusp",this.user_nusp),
 				new Field<Long>("image_id",this.image_id)
-				);
+		);
 	}
-	
-	/**
-	 * Discard description
-	 */
-	public void remove() throws Exception {
-		DB.ExecuteQuery("delete from Descriptions where id=" + id);
-	}
-	
 }

@@ -88,6 +88,7 @@ public class Image {
 			tempFile = null;
 		}
 	}
+
 	private static final String IMAGES_FOLDER = "/daisyklr/images/";
 	
 	private File tempFile = null;

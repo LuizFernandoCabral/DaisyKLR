@@ -10,35 +10,30 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import dao.Description;
 import dao.User;
 
 
-@WebServlet("/Login")
-public class Login extends HttpServlet {
+@WebServlet("/NewDescription")
+public class NewDescription extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendRedirect("login.jsp");
 	}
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Get parameters of the form
 		try {
-			long nusp = Long.parseLong(request.getParameter("nusp"));
-			String password = request.getParameter("password");
-			User us = new User(nusp);
-			if (!us.getPassword().equals(password))
-				throw new Exception("Número Usp/Senha inválido");
-			//Adiciona sessão
-			HttpSession session = request.getSession();
-			session.setAttribute("nusp", nusp);
-			session.setAttribute("usertype", us.getType());
-			//Direciona para index
-			((HttpServletRequest) request).getRequestDispatcher("books.jsp").forward(request, response);
+			long nusp = (long) request.getSession().getAttribute("nusp");
+			String text = request.getParameter("text");
+			long image_id = Long.parseLong(request.getParameter("image_id"));
+			Description des = new Description(text, nusp, image_id);
+			des.Save();
+			response.sendRedirect("books.jsp?msg=" + URLEncoder.encode("Descrição cadastrada", "UTF-8"));
 		}
 		catch (Exception e) {
-			response.sendRedirect("login.jsp?msg=" + URLEncoder.encode(e.getMessage(), "UTF-8"));
+			response.sendRedirect("descreverImagem.jsp?msg=" + URLEncoder.encode(e.getMessage(), "UTF-8"));
 		}
 		
 		
