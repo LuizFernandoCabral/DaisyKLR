@@ -3,126 +3,82 @@ package dao;
 import java.sql.ResultSet;
 
 import connector.db.DB;
+import connector.db.Field;
 import connector.db.SelectReader;
 
 public class Description {
-	/**** Attributes ****/
-	// Description id
-	private int id;
-	
-	// Description text
+	/**Description id**/
+	private long id;
 	private String text;
+	/**Author of description nusp**/
+	private long user_nusp;
+	private long image_id;
+	private Boolean new_description = false;
 	
-	// Author of description nusp
-	private int user_nusp;
+	private static long IDCOUNT = 0;
 	
-	// Image id
-	private int image_id; 
-	
-	// Description approved
-	private boolean approved = false;
-	
-	// Number of approvals of this description
-	private int upVotes;
-	
-	// Number of disapprovals of this description
-	private int downVotes;
-	
-	// totalVotes = upVotes + downVotes
-	
-	/**** Getters & setters ****/
-	
-	/**** Other methods ****/
-	
-	// Construtor que verifica se ja existe umq descriçao e cria uma descriçao que armazena no BD
-	// com id, text, approved, discarded, user_nusp, image_id
-	
-	// Update all attributes in DB
-	
-	// Approve description
-	private void approve(int id){
-		approved = true;
+	public long getId() {
+		return id;
+	}
+	public String getText() {
+		return text;
 	}
 	
-	// Discard description
-	private void discard() {
-		
+	public void setText(String text) {
+		this.text = text;
 	}
 	
-	// Vote up: increment approved and verify
-	public void upVote(int id) {
-		upVotes++;
-		verify();
-	}
-	
-	// Vote down: increment disapproved and verify
-	public void downVote(int id) {
-		downVotes++;
-		verify();
-	}
-	
-	private void verify() {
-		//verify if approved / disapproved before total = 3
-		if (upVotes == 2) {
-			approve();
-		} else if (downVotes == 2) {
-			discard();
-		}
-	}
-	
-	//discarded
-	
-	
-	
-	
-	
-	
-	public Description(String username, String userpass) {
-		DB.Select("SELECT * from Users where name='"+ username + "' and password='" + userpass + "'", new SelectReader() {
+	/**
+	 * Loads existent description with given id
+	 */
+	public Description(long id) throws Exception {
+		DB.Select("SELECT * from Descriptions where id=" + id, new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				if (rs.next()) {
-					nusp = rs.getLong("nusp");
-					name = rs.getString("name");
-					password = rs.getString("password");
-					type = rs.getInt("usertype");
+					text = rs.getString("text");
+					approved = rs.getBoolean("approved");
+					//discarded = rs.getBoolean("discarded");
+					user_nusp = rs.getLong("user_nusp");
+					image_id = rs.getLong("image_id");
+					upVotes = rs.getInt("upVotes");
+					downVotes = rs.getInt("downVotes");
 				}
 				else
-					throw new Exception("Usuário inexistente");
+					throw new Exception("Descriçao inexistente");
 			}
 		});
 	}
-	
-	
-	public User(long user_nusp) {
-		DB.Select("SELECT * from Users where nusp=" + user_nusp, new SelectReader() {
-			public void Read(ResultSet rs) throws Exception
-			{
-				if (rs.next()) {
-					nusp = rs.getLong("nusp");
-					name = rs.getString("name");
-					password = rs.getString("password");
-					type = rs.getInt("usertype");
-				}
-				else
-					throw new Exception("Usuário inexistente");
-			}
-		});
+	/**
+	 * Create new Description
+	 */
+	public Description(String text,long user_nusp,long image_id) {
+		this.id = IDCOUNT;
+		IDCOUNT++;
+		this.text = text;
+		this.user_nusp = user_nusp;
+		this.image_id = image_id;
+		this.new_description = true;
+	}
+	/**
+	 * Save description in DB
+	 */
+	public void Save() throws Exception{
+		DB.InsertUpdate("Descriptions", 
+				new_description, 
+				new Field<Long>("id",this.id,true),
+				new Field<String>("text",this.text),
+				new Field<Boolean>("approved",new_description ? false : Rating.isApproved(this.id).equals("approved")),
+				new Field<Long>("user_nusp",this.user_nusp),
+				new Field<Long>("image_id",this.image_id)
+				);
 	}
 	
-	public User(long nusp, String name, String password, int type) {
-		this.nusp = nusp;
-		this.name = name;
-		this.password = password;
-		this.type = type;
+	/**
+	 * Discard description
+	 */
+	public void remove() throws Exception {
+		DB.ExecuteQuery("delete from Descriptions where id=" + id);
 	}
 	
-	public void Save() throws Exception {
-	}
-	
-	private long nusp = 0;
-	private String name;
-	private String password;
-	private int type;
-
 }
