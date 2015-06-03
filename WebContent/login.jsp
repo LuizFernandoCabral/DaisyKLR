@@ -11,8 +11,8 @@
 	
 	<form method="post" action="Login">
 	<p>
-		<label for="numUSP">Login:</label>
-		<input type="text" name="numUSP" id="numUSP" autofocus required>
+		<label for="numUSP">Nusp:</label>
+		<input type="text" name="nusp" id="nusp" autofocus required>
 		<br />
        	<label for="password">Senha:</label>
        	<input type="password" name="password" id="password" required/>
