@@ -35,7 +35,7 @@ public class Login extends HttpServlet {
 			session.setAttribute("nusp", nusp);
 			session.setAttribute("usertype", us.getType());
 			//Direciona para index
-			((HttpServletRequest) request).getRequestDispatcher("books.jsp").forward(request, response);
+			response.sendRedirect("books.jsp");
 		}
 		catch (Exception e) {
 			response.sendRedirect("login.jsp?msg=" + URLEncoder.encode(e.getMessage(), "UTF-8"));

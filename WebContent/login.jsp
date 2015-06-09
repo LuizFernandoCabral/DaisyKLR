@@ -64,7 +64,7 @@
                 <h1 class="page-header">
                     Login
                 </h1>
-                <h3 style="color:#990000"><%=request.getParameter("msg") %></h3>
+                <h3 style="color:#990000"><%=(request.getParameter("msg") != null ? request.getParameter("msg") : "") %></h3>
             </div>
         </div>
         

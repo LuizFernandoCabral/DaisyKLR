@@ -14,4 +14,5 @@ public interface SelectReader {
 	 * @throws Exception for user defined errors
 	 */
 	public void Read(ResultSet rs) throws Exception;
+	
 }

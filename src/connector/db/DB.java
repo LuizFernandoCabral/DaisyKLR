@@ -51,7 +51,7 @@ public class DB {
 	 * @param table_name name of the table
 	 * @param insert true if it's insert or false if it's update (register already exists)
 	 * @param args all the columns to be set
-	 * @return o pk inserido/atualizado
+	 * @return último PK inserido no BD
 	 */
 	public static long InsertUpdate(String table_name, boolean insert, Field<?> ... args) {
 		long id = -1;

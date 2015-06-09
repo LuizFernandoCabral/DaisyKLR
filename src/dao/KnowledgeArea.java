@@ -6,21 +6,16 @@ import java.util.List;
 
 import connector.db.DB;
 import connector.db.Field;
+import connector.db.Holder;
 import connector.db.SelectReader;
 
+/**
+ * Class to handle the Knowledge Areas
+ * @author Luiz
+ *
+ */
 public class KnowledgeArea {
 	
-	public static void main(String[] args) throws Exception {
-		KnowledgeArea areas = new KnowledgeArea ("Banana");
-		//List<Book> lista = new ArrayList<Book>();
-		//for (KnowledgeArea area : areas){
-			//System.out.println(area.name);
-			//System.out.println(area.id);
-			//lista = area.getlist_book();
-			//for (Book book : lista){}
-		//}
-		areas.SaveKnowledgeArea();
-	}
 	/**
 	 * Constructor that search in Database for the Knowledge Area - through the id
 	 * @param knowledgeArea_id
@@ -40,21 +35,21 @@ public class KnowledgeArea {
 	}
 	
 	/**
-	 * Constructor to create new entry
+	 * Constructor to create new entry or update an existing
 	 * @param KnowledgeArea_name
 	 */
 	public KnowledgeArea (String Area_name) throws Exception {
-		DB.Select("SELECT * from KnowledgeAreas where name like '"+ Area_name + "'", new SelectReader() {
+		DB.Select("SELECT * from KnowledgeAreas where name='"+ Area_name + "'", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				if (rs.next()) {
 					id = rs.getLong("id");
 					name = Area_name;
-					new_Area = false;
+					new_area = false;
 				}
 				else {
 					name = Area_name;
-					new_Area = true;
+					new_area = true;
 				}
 			}
 		});
@@ -86,70 +81,29 @@ public class KnowledgeArea {
 	private KnowledgeArea (long KnowledgeArea_id, String KnowledgeArea_name) {
 		this.id = KnowledgeArea_id;
 		this.name = KnowledgeArea_name;
-	}
-	
-	/**
-	 * Method to add new books into the Knowledge area
-	 * @param books
-	 */
-	public void AddBooks (Book ... books){
-		for (Book book : books)
-			this.list_book.add(book);
+		this.new_area = false;
 	}
 	
 	/**
 	 * Method to create new Knowledge Area if non-existing
 	 */
 	public void SaveKnowledgeArea() {
-		if (new_Area){
+		if (new_area){
 			DB.InsertUpdate("KnowledgeAreas", 
-				new_Area,
+				new_area,
+				new Field<Long>("name", id, true),
 				new Field<String>("name", name)
 				);
+			new_area = false;
 		}
 		else 
 			System.out.println("Área já existente no Banco de Dados, id = " + this.id);
 	}
 	
-	/**
-	 * Method to create new KnowledgeArea-Book relation
-	 * @throws Exception
-	 */
-	public void SaveBookRelations() throws Exception {
-		for (Book book : list_book){
-			DB.Select("select * from Books_KnowledegeAreas where knowledgearea_id=" + this.id + " and book_isbn="+ book.getISBN(), new SelectReader() {
-				public void Read(ResultSet rs) throws Exception
-				{
-					if (!rs.next()) {
-						DB.InsertUpdate("Books_KnowledgeAreas", 
-							true,
-							new Field<Long>("book_isbn", book.getISBN()),
-							new Field<Long>("knowledgearea_id", id)
-						);
-					}
-				}
-			});
-		}
-	}
-
 	// getters and setters
-	/**
-	 * Gets books from DB
-	 * @throws Exception
-	 */
-	public void setListBook() throws Exception {
-		DB.Select("select * from Books_KnowledegeAreas where knowledgearea_id='"+ id + "'", new SelectReader() {
-			public void Read(ResultSet rs) throws Exception
-			{
-				while (rs.next()) {
-					list_book.add(new Book(rs.getLong("book_isbn")));
-				}
-			}
-		});
-	}
 	
-	public void setName(String Name){
-		this.name=Name;
+	public void setName(String name){
+		this.name = name;
 	}
 	
 	public String getName(){
@@ -160,13 +114,25 @@ public class KnowledgeArea {
 		return this.id;
 	}
 	
-	public List<Book> getlist_book (){
-		return this.list_book;
+	/**
+	 * Dinamically gets books of this knowledge area
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Book> getBooks() throws Exception{
+		Holder<List<Book>> books_list = new Holder<List<Book>>(new ArrayList<Book>());
+		DB.Select("select * from Books_KnowledegeAreas where knowledgearea_id='"+ id + "'", new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				while (rs.next())
+					books_list.getValue().add(new Book(rs.getLong("book_isbn")));
+			}
+		});
+		return books_list.getValue();
 	}
 	
 	// Attributes
 	private long id = 0;
 	private String name;
-	private List<Book> list_book = new ArrayList<Book>();
-	private boolean new_Area = false;
+	private boolean new_area = false;
 }

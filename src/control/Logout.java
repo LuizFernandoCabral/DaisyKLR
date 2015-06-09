@@ -21,7 +21,7 @@ public class Logout extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("nusp", "0");
-		response.sendRedirect("index.jsp");	
+		response.sendRedirect("login.jsp");	
 	}
 
 }
