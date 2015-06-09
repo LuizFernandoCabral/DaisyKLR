@@ -6,6 +6,7 @@ import java.util.List;
 
 import connector.db.DB;
 import connector.db.Field;
+import connector.db.Holder;
 import connector.db.SelectReader;
 
 public class Book {
@@ -85,6 +86,25 @@ public class Book {
 		});
 		
 		return list;	
+	}
+	
+	public static List<Book> searchByKnowledgeArea(List<KnowledgeArea> areas) throws Exception {
+		List<Book> list = new ArrayList<Book>();
+		String select = "SELECT DISTINCT B.* from Books B join Books_KnowledegeAreas A on A.book_isbn=B.isbn where A.knowledgearea_id in(0";
+		for (KnowledgeArea area : areas)
+			select += "," + area.getId();
+		select += ")";
+		DB.Select(select, new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				while (rs.next()) {
+					
+					list.add(new Book(rs.getLong("isbn"), rs.getString("title"), rs.getString("authors"), rs.getInt("sent")));
+				}
+			}
+		});
+		
+		return list;
 	}
 	
 
@@ -172,7 +192,7 @@ public class Book {
 	
 	//getters e setters
 	public List<KnowledgeArea> getKnowledegeAreas() throws Exception {
-		DB.Select("select * from Books_KnowledegeAreas where book_isbn='"+ isbn + "'", new SelectReader() {
+		DB.Select("select * from Books_KnowledegeAreas where book_isbn="+ isbn, new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				while (rs.next()) {
@@ -183,8 +203,21 @@ public class Book {
 		return list_Area;
 	}
 	
+	public Image getFrontImage() throws Exception {
+		Holder<Image> im = new Holder<Image>(null);
+		DB.Select("select * from Images where book_isbn="+ isbn + " and page=0", new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				if (rs.next()) {
+					im.setValue(new Image(rs.getLong("id")));
+				}
+			}
+		});
+		return im.getValue();
+	}
+	
 	public List<Image> getImages() throws Exception {
-		DB.Select("select * from Images where book_isbn='"+ isbn + "'", new SelectReader() {
+		DB.Select("select * from Images where book_isbn="+ isbn + "", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				while (rs.next()) {

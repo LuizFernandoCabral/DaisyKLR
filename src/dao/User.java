@@ -1,6 +1,8 @@
 package dao;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import connector.db.DB;
 import connector.db.Field;
@@ -83,6 +85,20 @@ public class User {
 	}
 	public void setType(UserType type) {
 		this.type = type;
+	}
+	
+	public List<KnowledgeArea> getKnowledgeAreas() throws Exception {
+		List<KnowledgeArea> list = new ArrayList<KnowledgeArea>();
+		DB.Select("select * from Users_KnowledegeAreas where user_nusp= " + this.getNusp(), new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				while (rs.next()) {
+					
+					list.add(new KnowledgeArea(rs.getLong("knowledgearea_id")));
+				}
+			}
+		});
+		return list;
 	}
 	
 	//User data

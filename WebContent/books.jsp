@@ -1,3 +1,7 @@
+<%@page import="dao.KnowledgeArea"%>
+<%@page import="dao.User"%>
+<%@page import="dao.Book"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -79,7 +83,7 @@
                     <small>Escolha um livro</small>
                     <span class="pull-right">
                     <h3>
-                    	<% dao.User us = new dao.User((long) request.getSession().getAttribute("nusp"));
+                    	<% User us = new User((long) request.getSession().getAttribute("nusp"));
             				out.print(us.getName());
             				%>
             				</h3>
@@ -88,44 +92,47 @@
             </div>
         </div>
         <!-- /.row -->
-		<% for (int i = 0; i < 3; i++) { %>
+        <% //Pega livros
+        	List<Book> books = Book.searchByKnowledgeArea(us.getKnowledgeAreas());
+        	int c = 0;
+        %>
+		<% for (Book b : books) { %>
         <!-- Projects Row -->
-        <div class="row">
+        <% if (c % 3 == 0) { %>
+        	<div class="row">
+        <% } %>
             <div class="col-md-4 portfolio-item">
                 <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                    <img width="200" class="img-responsive" src="ViewImage?id=<%=b.getFrontImage().getId() %>" alt="">
                 </a>
                 <h3>
-                    <a href="#">Livro <%=(3*i + 1) %></a>
+                    <a href="#"><%=b.getTitle() %></a>
                 </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <p>
+                <b>ISBN:</b> <%=b.getISBN() %><br>
+                <b>Autor(es):</b> <%=b.getAuthor() %><br>
+                <% String areas = ""; 
+                	for (KnowledgeArea area : b.getKnowledegeAreas()) {
+                		areas += area.getName() + ", ";
+                	}
+                	areas = areas.substring(0, areas.length() - 2);
+                		
+                		%>
+                <b>Áreas de conhecimento: </b> <%=areas %>
+                </p>
             </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Livro <%=(3*i + 2) %></a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Livro <%=(3*i + 3) %></a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
+	 	<%	c++; 
+	 		if (c % 3 == 0 || c == books.size()) { %>
+        	</div>
+        	<% } %>
         <% } %>
         <!-- /.row -->
 
 
-        <hr>
+        
 
-        <!-- Pagination -->
+        <!-- Pagination 
+        <hr>
         <div class="row text-center">
             <div class="col-lg-12">
                 <ul class="pagination">
@@ -153,6 +160,7 @@
                 </ul>
             </div>
         </div>
+        -->
         <!-- /.row -->
 
         <hr>
