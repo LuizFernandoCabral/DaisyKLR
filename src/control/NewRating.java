@@ -14,7 +14,7 @@ import dao.Description;
 import dao.User;
 
 
-@WebServlet("/NewDescription")
+@WebServlet("/NewRating")
 public class NewRating extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
