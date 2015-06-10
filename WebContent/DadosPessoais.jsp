@@ -100,14 +100,15 @@
         <!-- Areas Conhecimento -->
         <div class="row" style="margin-left:5%">
             <div class="col-lg-12">
-                <h3>Áreas de Conhecimento:
-                	<ol></ol>
+                <h3>Áreas de Conhecimento:</h3>
+                <h4>
+                	<ul>
                 		<% List<KnowledgeArea> areas = us.getKnowledgeAreas(); %>
                 		<% for (KnowledgeArea a : areas) { %>
                     	<li><small><%=a.getName() %></small></li>
                     	<% } %>
-                    </ol>
-                </h3>
+                    </ul>
+                </h4>
             </div>
         </div>
         <br>
