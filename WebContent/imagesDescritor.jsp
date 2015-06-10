@@ -1,3 +1,9 @@
+<%@page import="dao.UserType"%>
+<%@page import="dao.KnowledgeArea"%>
+<%@page import="dao.User"%>
+<%@page import="dao.Book"%>
+<%@page import="dao.Image"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -71,111 +77,64 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Imagens a descrever
-                    <small>"Area de conhecimento"</small>
+            <% User us = new User((long) request.getSession().getAttribute("nusp")); 
+        		Book book = new Book(Long.parseLong(request.getParameter("id")));
+        		%>       		
+                <h1 class="page-header"><%=book.getTitle() %>
+                    <small>
+                    <% String areas = ""; 
+                	for (KnowledgeArea area : book.getKnowledegeAreas()) {
+                		areas += area.getName() + ", ";
+                	}
+                	areas = areas.substring(0, areas.length() - 2); %>
+                	<%= areas%>
+                	</small>
+                    <span class="pull-right">
+                    <h3>
+                    	<% out.print(us.getName());%>
+       				</h3>
+       				</span>
                 </h1>
             </div>
         </div>
         <!-- /.row -->
-
+        <% // Pega Imagens 
+        	List<Image> Images = book.getImagesDesc();
+        	int i=0;
+        %>
+        
+		<% for (Image Img : Images){
+        	String link = "descreverImagem.jsp";
+        	link += "?id=" + Img.getId();
+			if (Img.getPage()!=0) {
+		%>
         <!-- Projects Row -->
-        <div class="row">
+        <% if (i % 3 == 0) { %>
+        	<div class="row">
+        <% } %>
+        	<a href="<%=link %>">
             <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
+                    <img width="200" class="img-responsive" src="ViewImage?id=<%=Img.getId() %>" alt="">
+                
                 <h3>
-                    <a href="#">Imagem 1</a>
+                    <h2 style="color:black">Imagem <%=i+1 %></h5>
                 </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <p style="color:gray">Page: <%=Img.getPage() %></p>
             </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
+            </a>
+        
+        <%	i++; 
+	 		if (i % 3 == 0 || i == Images.size()-1) { %>
+        	</div>
+        	<% } %>
+        	<% } %>
+        <% } %>
         <!-- /.row -->
 
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-
-        <!-- Projects Row -->
-        <div class="row">
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-            <div class="col-md-4 portfolio-item">
-                <a href="#">
-                    <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                </a>
-                <h3>
-                    <a href="#">Project Name</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
-            </div>
-        </div>
-        <!-- /.row -->
-
+        
         <hr>
 
-        <!-- Pagination -->
+        <!-- Pagination>
         <div class="row text-center">
             <div class="col-lg-12">
                 <ul class="pagination">
@@ -217,7 +176,6 @@
             <!-- /.row -->
         </footer>
 
-    </div>
     <!-- /.container -->
 
     <!-- jQuery -->

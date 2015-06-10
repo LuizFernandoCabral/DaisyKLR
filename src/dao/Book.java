@@ -216,8 +216,24 @@ public class Book {
 		return im.getValue();
 	}
 	
-	public List<Image> getImages() throws Exception {
-		DB.Select("select * from Images where book_isbn="+ isbn + "", new SelectReader() {
+	public List<Image> getImagesDesc() throws Exception {
+		
+		DB.Select("select i.* from Images i where (select count(*) from Descriptions d where"
+				+ " i.id=d.image_id and (d.discarded=0 or d.approved=1))=0 and i.book_isbn="+ isbn + "", new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				while (rs.next()) {
+					list_Img.add(new Image(rs.getLong("id")));
+				}
+			}
+		});
+		return list_Img;
+	}
+	
+	public List<Image> getImagesAval() throws Exception {
+		
+		DB.Select("select i.* from Images i where (select count(*) from Descriptions d where"
+				+ " i.id=d.image_id and (d.discarded=0 or d.approved=1))=0 and i.book_isbn="+ isbn + "", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				while (rs.next()) {
