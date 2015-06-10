@@ -41,19 +41,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">DaisyKLR</a>
+                <a class="navbar-brand" href="books.jsp">DaisyKLR</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Sobre</a>
+                        <a href="Sobre.jsp">Sobre</a>
                     </li>
                     <li>
                         <a href="#">Historico</a>
                     </li>
                     <li>
-                        <a href="#">Dados Pessoais</a>
+                        <a href="DadosPessoais.jsp">Dados Pessoais</a>
                     </li>
                     <li>
                         <a href="Logout">Logout</a>
@@ -76,6 +76,13 @@
             <div class="col-lg-12">
                 <h1 class="page-header">Descrever Imagen
                     <small><% out.print(book.getTitle()); %>, <% out.print(book.getAuthor()); %></small>
+                    <span class="pull-right">
+                    <h3>
+                    	<% dao.User us = new dao.User((long) request.getSession().getAttribute("nusp"));
+            				out.print(us.getName());
+            				%>
+					</h3>
+            		</span>
                 </h1>
             </div>
         </div>
@@ -101,38 +108,6 @@
                 </aside>
             </div>
             
-        </div>
-        <!-- /.row -->
-
-        <hr>
-
-        <!-- Pagination -->
-        <div class="row text-center">
-            <div class="col-lg-12">
-                <ul class="pagination">
-                    <li>
-                        <a href="#">&laquo;</a>
-                    </li>
-                    <li class="active">
-                        <a href="#">1</a>
-                    </li>
-                    <li>
-                        <a href="#">2</a>
-                    </li>
-                    <li>
-                        <a href="#">3</a>
-                    </li>
-                    <li>
-                        <a href="#">4</a>
-                    </li>
-                    <li>
-                        <a href="#">5</a>
-                    </li>
-                    <li>
-                        <a href="#">&raquo;</a>
-                    </li>
-                </ul>
-            </div>
         </div>
         <!-- /.row -->
 
