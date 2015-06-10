@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<% boolean login = !(session.getAttribute("nusp") == null || session.getAttribute("nusp").equals("") || session.getAttribute("nusp").equals("0")); %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,24 +44,27 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">DaisyKLR</a>
+                <a class="navbar-brand" href="books.jsp">DaisyKLR</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Sobre</a>
+                        <a href="Sobre.jsp">Sobre</a>
+                    </li>
+                    <% if (login) { %>
+                    <li>
+                        <a href="historico.jsp">Historico</a>
                     </li>
                     <li>
-                        <a href="#">Historico</a>
-                    </li>
-                    <li>
-                        <a href="#">Dados Pessoais</a>
+                        <a href="DadosPessoais.jsp">Dados Pessoais</a>
                     </li>
                     <li>
                         <a href="Logout">Logout</a>
                     </li>
+                    <% } %>
                 </ul>
+
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -80,17 +86,12 @@
         
         <!-- Text -->
          <p>
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.
-         </p>
-    	 <p>
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.
-         </p>
-         <p>
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.
-         </p>
-         <p>
-         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.
-         </p>
+         Site realizado para a disciplina de Laboratório de Engenharia de Software I no primeiro semestre de 2015 pelos alunos: Kevin, Luiz e Ricardo.
+
+       	 </p>
+       	 <p>
+      	 	O site tem como função permitir maior acessiblidade para deficientes visuais a livros, promovendo a descrição textual de imagens.
+       	 </p>
     
     
     <footer>
