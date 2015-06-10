@@ -65,14 +65,17 @@
         <!-- /.container -->
     </nav>
 
+<% dao.Image im = new dao.Image(Long.parseLong(request.getParameter("id"))); %>
+<% dao.Book book = new dao.Book(im.getISBN()); %>
+
     <!-- Page Content -->
     <div class="container">
 
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">"Nome do Livro"
-                    <small>"Informacoes do livro"</small>
+                <h1 class="page-header">Descrever Imagen
+                    <small><% out.print(book.getTitle()); %>, <% out.print(book.getAuthor()); %></small>
                 </h1>
             </div>
         </div>
@@ -81,18 +84,20 @@
         <!-- Projects Row -->
         <div class="row">
             <div class="col-md-4 portfolio-item">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                <h3>
-                    <a href="#">Livro 1</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <img class="img-responsive" src="ViewImage?id=<%=im.getId()%>" alt="">
             </div>
             <div class="col-md-4 portfolio-item">
                 <aside>
-                <h3>
-                    <a>Trecho</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <h3>Descriçao</h3>
+                	<form method="post" action="NewDescription">
+                	<p>
+                	<textarea name="text" rows="8" cols="50" >
+                	</textarea>
+                	<br>
+                	<input type="hidden" name="image_id" value="<% out.print(im.getId()); %>" />
+                	<input type="submit" value="Guardar" />
+                	</p> 
+                	</form>
                 </aside>
             </div>
             
