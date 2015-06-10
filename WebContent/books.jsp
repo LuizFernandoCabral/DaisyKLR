@@ -1,3 +1,4 @@
+<%@page import="dao.UserType"%>
 <%@page import="dao.KnowledgeArea"%>
 <%@page import="dao.User"%>
 <%@page import="dao.Book"%>
@@ -96,17 +97,20 @@
         	List<Book> books = Book.searchByKnowledgeArea(us.getKnowledgeAreas());
         	int c = 0;
         %>
-		<% for (Book b : books) { %>
+		<% for (Book b : books) { 
+			String link = us.getType() == UserType.Descritor ? "imagesDescritor.jsp" : "imagesAvaliador.jsp";
+			link += "?id=" + b.getISBN();
+		%>
         <!-- Projects Row -->
         <% if (c % 3 == 0) { %>
         	<div class="row">
         <% } %>
             <div class="col-md-4 portfolio-item">
-                <a href="#">
+                <a href="<%=link %>">
                     <img width="200" class="img-responsive" src="ViewImage?id=<%=b.getFrontImage().getId() %>" alt="">
                 </a>
                 <h3>
-                    <a href="#"><%=b.getTitle() %></a>
+                    <a href="<%=link %>"><%=b.getTitle() %></a>
                 </h3>
                 <p>
                 <b>ISBN:</b> <%=b.getISBN() %><br>
