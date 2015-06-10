@@ -231,9 +231,8 @@ public class Book {
 	}
 	
 	public List<Image> getImagesAval() throws Exception {
-		
 		DB.Select("select i.* from Images i where (select count(*) from Descriptions d where"
-				+ " i.id=d.image_id and (d.discarded=0 or d.approved=1))=0 and i.book_isbn="+ isbn + "", new SelectReader() {
+				+ " i.id=d.image_id and d.discarded=0 and d.approved=0)>0 and i.book_isbn="+ isbn + "", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				while (rs.next()) {
