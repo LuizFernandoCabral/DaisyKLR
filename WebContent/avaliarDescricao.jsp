@@ -1,8 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-<% boolean login = !(session.getAttribute("nusp") == null || session.getAttribute("nusp").equals("") || session.getAttribute("nusp").equals("0")); %>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,7 +49,6 @@
                     <li>
                         <a href="Sobre.jsp">Sobre</a>
                     </li>
-                    <% if (login) { %>
                     <li>
                         <a href="historico.jsp">Historico</a>
                     </li>
@@ -62,9 +58,7 @@
                     <li>
                         <a href="Logout">Logout</a>
                     </li>
-                    <% } %>
                 </ul>
-
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -72,29 +66,75 @@
     </nav>
 
     <!-- Page Content -->
-    
     <div class="container">
-    
-    	<!-- Page Header -->
+
+        <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Sobre
-                    <small>DaisyKLR</small>
+                <h1 class="page-header">"Nome do Livro"
+                    <small>"Informacoes do livro"</small>
                 </h1>
             </div>
         </div>
-        
-        <!-- Text -->
-         <p>
-         Site realizado para a disciplina de Laboratório de Engenharia de Software I no primeiro semestre de 2015 pelos alunos: Kevin, Luiz e Ricardo.
+        <!-- /.row -->
 
-       	 </p>
-       	 <p>
-      	 	O site tem como função permitir maior acessiblidade para deficientes visuais a livros, promovendo a descrição textual de imagens.
-       	 </p>
-    
-    
-    <footer>
+        <!-- Projects Row -->
+        <div class="row">
+            <div class="col-md-4 portfolio-item">
+                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
+                <h3>
+                    <a href="#">Livro 1</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+            </div>
+            <div class="col-md-4 portfolio-item">
+                <aside>
+                <h3>
+                    <a>Trecho</a>
+                </h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                </aside>
+            </div>
+            
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Pagination -->
+        <div class="row text-center">
+            <div class="col-lg-12">
+                <ul class="pagination">
+                    <li>
+                        <a href="#">&laquo;</a>
+                    </li>
+                    <li class="active">
+                        <a href="#">1</a>
+                    </li>
+                    <li>
+                        <a href="#">2</a>
+                    </li>
+                    <li>
+                        <a href="#">3</a>
+                    </li>
+                    <li>
+                        <a href="#">4</a>
+                    </li>
+                    <li>
+                        <a href="#">5</a>
+                    </li>
+                    <li>
+                        <a href="#">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
             <div class="row">
                 <div class="col-lg-12">
                     <p>Copyright &copy; DaisyKLR 2015</p>

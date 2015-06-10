@@ -1,3 +1,6 @@
+<%@page import="java.util.List"%>
+<%@page import="dao.KnowledgeArea"%>
+<%@page import="dao.User"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -41,19 +44,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">DaisyKLR</a>
+                <a class="navbar-brand" href="books.jsp">DaisyKLR</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Sobre</a>
+                        <a href="books.jsp">Sobre</a>
                     </li>
                     <li>
-                        <a href="#">Historico</a>
+                        <a href="historico.jsp">Historico</a>
                     </li>
                     <li>
-                        <a href="#">Dados Pessoais</a>
+                        <a href="DadosPessoais.jsp">Dados Pessoais</a>
                     </li>
                      <li>
                         <a href="Logout">Logout</a>
@@ -73,8 +76,15 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Dados Pessoais
-                    <small>Nome</small>
+                    <small>
+                    <% 
+						User us = new User((long) request.getSession().getAttribute("nusp"));
+            				out.print(us.getName());
+            		
+            		%>
+					</small>
                 </h1>
+                 <h4 style="color:#990000"><%=(request.getParameter("msg") != null ? request.getParameter("msg") : "") %></h4>
             </div>
         </div>
         
@@ -82,7 +92,7 @@
         <div class="row" style="margin-left:5%">
             <div class="col-lg-12">
                 <h3>NUSP:
-                    <small>01234567</small>
+                    <small><%=us.getNusp() %></small>
                 </h3>
             </div>
         </div>
@@ -90,15 +100,19 @@
         <!-- Areas Conhecimento -->
         <div class="row" style="margin-left:5%">
             <div class="col-lg-12">
-                <h3>Áreas de Conhecimento:
-                	<ol></ol>
-                    	<li><small>0</small></li>
-                    	<li><small>1</small></li>
-                    	<li><small>2</small></li>
-                    </ol>
-                </h3>
+                <h3>Áreas de Conhecimento:</h3>
+                <h4>
+                	<ul>
+                		<% List<KnowledgeArea> areas = us.getKnowledgeAreas(); %>
+                		<% for (KnowledgeArea a : areas) { %>
+                    	<li><small><%=a.getName() %></small></li>
+                    	<% } %>
+                    </ul>
+                </h4>
             </div>
         </div>
+        <br>
+        <br>
         
         <!-- Alteração Senha -->
         <div class="row" style="margin-left:5%;border-style:solid">
@@ -109,17 +123,17 @@
             </div>
             <form method="post" action="ChangePass">
 					<div class="col-lg-12">
-					<label for="password">Senha Antiga:</label>
-					<input type="password" name="password" id="password" autofocus required>
+					<label for="old_pass">Senha Antiga:</label>
+					<input type="password" name="old_pass" id="old_pass" autofocus required>
 					</div>
 					<div class="col-lg-12" style="margin:1%">
-			       	<label for="new password">Senha Nova:</label>
-			       	<input type="password" name="new password" id="new password" required/>
-			       	<label for="new password">Confirmar Senha:</label>
-			       	<input type="password" name="new password conf" id="new password" required/>
+			       	<label for="new_pass1">Senha Nova:</label>
+			       	<input type="password" name="new_pass1" id="new_pass1" required/>
+			       	<label for="new_pass1">Confirmar Senha:</label>
+			       	<input type="password" name="new_pass2" id="new_pass2" required/>
 			       	</div>
 					<div class="col-lg-12" style="margin:1%">
-			       	<input type="submit" value="Alterar" />
+			       	<input type="submit" />
 			       	</div>
 			</form>	
             
