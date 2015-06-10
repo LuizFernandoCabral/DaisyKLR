@@ -45,6 +45,9 @@ public class Image {
 	public String getLocation() {
 		return location;
 	}
+	public long getISBN(){
+		return book_isbn;
+	}
 	
 	/**
 	 * Create new Image
