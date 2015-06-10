@@ -53,13 +53,13 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#">Sobre</a>
+                        <a href="Sobre.jsp">Sobre</a>
                     </li>
                     <li>
-                        <a href="#">Historico</a>
+                        <a href="historico.jsp">Historico</a>
                     </li>
                     <li>
-                        <a href="#">Dados Pessoais</a>
+                        <a href="DadosPessoais.jsp">Dados Pessoais</a>
                     </li>
                     <li>
                         <a href="Logout">Logout</a>
