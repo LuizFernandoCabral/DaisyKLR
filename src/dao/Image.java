@@ -48,6 +48,20 @@ public class Image {
 	public long getISBN(){
 		return book_isbn;
 	}
+	public Description getDescriptions() throws Exception{
+		DB.Select("SELECT * from Descriptions where image_id=" + this.id, new SelectReader() {
+			public void Read(ResultSet rs) throws Exception
+			{
+				if (rs.next()) {
+					Desc_id = rs.getLong("id");
+				}
+				else
+					throw new Exception("Imagem inexistente");
+			}
+		});
+		Description D = new Description(Desc_id);
+		return D;
+	}
 	
 	/**
 	 * Create new Image
@@ -99,4 +113,5 @@ public class Image {
 	private int page;
 	private String location = "";
 	private long book_isbn;
+	private long Desc_id;
 }

@@ -105,7 +105,7 @@
         %>
         
 		<% for (Image Img : Images){
-        	String link = "descreverImagem.jsp";
+        	String link = "avaliarDescricao.jsp";
         	link += "?id=" + Img.getId();
 			if (Img.getPage()!=0) {
 		%>
@@ -118,14 +118,14 @@
                     <img width="200" class="img-responsive" src="ViewImage?id=<%=Img.getId() %>" alt="">
                 
                 <h3>
-                    <h2 style="color:black">Imagem <%=i+1 %></h5>
+                    <h2 style="color:black">Imagem <%= Images.size() %></h5>
                 </h3>
                 <p style="color:gray">Page: <%=Img.getPage() %></p>
             </div>
             </a>
         
         <%	i++; 
-	 		if (i % 3 == 0 || i == Images.size()-1) { %>
+	 		if (i % 3 == 0 || i == Images.size()) { %>
         	</div>
         	<% } %>
         	<% } %>

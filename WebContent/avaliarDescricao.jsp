@@ -1,3 +1,11 @@
+<%@page import="javax.management.DescriptorKey"%>
+<%@page import="dao.Description"%>
+<%@page import="dao.UserType"%>
+<%@page import="dao.KnowledgeArea"%>
+<%@page import="dao.User"%>
+<%@page import="dao.Book"%>
+<%@page import="dao.Image"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -71,8 +79,18 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">"Nome do Livro"
-                    <small>"Informacoes do livro"</small>
+            <% Image im = new dao.Image(Long.parseLong(request.getParameter("id")));
+            		Book book = new dao.Book(im.getISBN()); 
+            		Description Desc = im.getDescriptions();%>
+                <h1 class="page-header">Avaliar Imagem
+                    <small><% out.print(book.getTitle()); %>, <% out.print(book.getAuthor()); %></small>
+                    <span class="pull-right">
+                    <h3>
+                    	<% User us = new dao.User((long) request.getSession().getAttribute("nusp"));
+            				out.print(us.getName());
+            				%>
+					</h3>
+            		</span>
                 </h1>
             </div>
         </div>
@@ -81,19 +99,27 @@
         <!-- Projects Row -->
         <div class="row">
             <div class="col-md-4 portfolio-item">
-                <img class="img-responsive" src="http://placehold.it/700x400" alt="">
-                <h3>
-                    <a href="#">Livro 1</a>
-                </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <img class="img-responsive" src="ViewImage?id=<%=im.getId()%>" alt="">
             </div>
             <div class="col-md-4 portfolio-item">
                 <aside>
                 <h3>
-                    <a>Trecho</a>
+                    Descrição:
                 </h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae.</p>
+                <p> &nbsp&nbsp&nbsp <%=Desc.getText() %>
                 </aside>
+            </div>
+            
+            <div class="col-md-6" style="margin-left:10%">
+                <form method="post" action="EvDescription" class="form-inline">
+                	<br>
+                	<h1>
+                	<input type="radio" name="Evaluate" value="Accept"> Aceitar
+                	<input type="radio" name="Evaluate" value="Decline"> Descartar
+                	</h1>
+                	<p style="margin-left:20%"> 
+                	<input type="submit" value="Avaliar" />
+                </form>
             </div>
             
         </div>
@@ -101,7 +127,7 @@
 
         <hr>
 
-        <!-- Pagination -->
+        <!-- Pagination>
         <div class="row text-center">
             <div class="col-lg-12">
                 <ul class="pagination">
