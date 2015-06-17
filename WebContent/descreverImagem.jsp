@@ -74,7 +74,7 @@
         <!-- Page Header -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Descrever Imagen
+                <h1 class="page-header">Descrever Imagem
                     <small><% out.print(book.getTitle()); %>, <% out.print(book.getAuthor()); %></small>
                     <span class="pull-right">
                     <h3>
