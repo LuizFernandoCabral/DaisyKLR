@@ -98,8 +98,7 @@
                 <h3>Descriçao</h3>
                 	<form method="post" action="NewDescription">
                 	<p>
-                	<textarea name="text" rows="8" cols="50" >
-                	</textarea>
+                	<textarea name="text" rows="8" cols="50" ></textarea>
                 	<br>
                 	<input type="hidden" name="image_id" value="<% out.print(im.getId()); %>" />
                 	<input type="submit" value="Guardar" />

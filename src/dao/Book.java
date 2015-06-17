@@ -230,9 +230,9 @@ public class Book {
 		return list_Img;
 	}
 	
-	public List<Image> getImagesAval() throws Exception {
+	public List<Image> getImagesAval(long nusp) throws Exception {
 		DB.Select("select i.* from Images i where (select count(*) from Descriptions d where"
-				+ " i.id=d.image_id and d.discarded=0 and d.approved=0)>0 and i.book_isbn="+ isbn + "", new SelectReader() {
+				+ " i.id=d.image_id and d.discarded=0 and d.approved=0 and (select count(*) from ratings r where r.rating_user_nusp=" + nusp + " and r.description_id=d.id) = 0)>0 and i.book_isbn="+ isbn + "", new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				while (rs.next()) {

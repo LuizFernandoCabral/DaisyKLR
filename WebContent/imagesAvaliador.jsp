@@ -100,7 +100,7 @@
         <!-- /.row -->
 
          <% // Pega Imagens 
-        	List<Image> Images = book.getImagesAval();
+        	List<Image> Images = book.getImagesAval(us.getNusp());
         	int i=0;
         %>
         

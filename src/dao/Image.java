@@ -49,7 +49,7 @@ public class Image {
 		return book_isbn;
 	}
 	public Description getDescriptions() throws Exception{
-		DB.Select("SELECT * from Descriptions where image_id=" + this.id, new SelectReader() {
+		DB.Select("SELECT * from Descriptions where approved=0 and discarded=0 and image_id=" + this.id, new SelectReader() {
 			public void Read(ResultSet rs) throws Exception
 			{
 				if (rs.next()) {

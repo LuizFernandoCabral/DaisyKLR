@@ -111,7 +111,8 @@
             </div>
             
             <div class="col-md-6" style="margin-left:10%">
-                <form method="post" action="EvDescription" class="form-inline">
+                <form method="post" action="NewRating" class="form-inline">
+                	<input type="hidden" name="description_id" value="<%=Desc.getId() %>" />
                 	<br>
                 	<h1>
                 	<input type="radio" name="Evaluate" value="Accept"> Aceitar
